@@ -18,10 +18,10 @@ export default function page() {
     setId_1(urlParts[urlParts.length - 1]);
     setUrl(`/api/topics/${id_1}`);
 
-    const res = (await axios.get(url)).data.body;
-    // console.log(res.data);
-    setTopicname(res.title);
-    setDescription(res.description);
+    const res = (await axios.get(url));
+    console.log(res.data);
+    setTopicname(res.data.body.title);
+    setDescription(res.data.body.description);
   };
   const updateTopic = async () => {
     if (topicname === "" || description === "") {
@@ -34,8 +34,8 @@ export default function page() {
       newDescription: description,
     });
 
-    // console.log(res);
-    if (res.status === 200) {
+    // console.log(res.data);
+    if (res.status== 200) {
       // alert("Topic updated successfully");
       router.push("/");
     } else {

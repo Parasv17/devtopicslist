@@ -35,6 +35,7 @@ export async function GET(request, { params }) {
     await connectDB();
     const topics = await Topic.findOne({ _id: id });
     console.log(topics);
+    // console.log(topics);
     return NextResponse.json({
         status: 200,
         body: topics

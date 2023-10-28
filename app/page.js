@@ -13,18 +13,18 @@ export default  function Home() {
   
       try {
         const res = await axios.get('/api/topics')
-        console.log(res.data.body)
+        // console.log(res.data.body)
         
         // return res.data.body
         setTopics(res.data.body)
         console.log(topics)
-        if(!res.ok)
+        if(!res.status === 200)
         {
           throw new Error(res.data.body.message)
         }
       }
       catch (err) {
-        console.log(err)
+      console.log(err.message)
       }
   }
   
