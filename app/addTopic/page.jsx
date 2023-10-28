@@ -1,10 +1,38 @@
 "use client"
 import React from 'react'
 import { useState } from 'react'
+import axios from 'axios'
+import {useRouter} from 'next/navigation'
 
-export default function addTopic() {
+export default  function addTopic() {
   const [topicname,setTopicname]=useState('');
   const [description,setDescription]=useState('');
+  const router=useRouter();
+
+
+  const addTopic=async()=>{
+
+    if (topicname === "" || description === "") {
+      alert("Please fill all the fields");
+      return;
+    }
+    const res= await axios.post('/api/topics',{
+      title:topicname,
+      description:description
+    })
+
+
+   if(res.data.status===200){
+    // alert('Topic added successfully')
+    router.push('/')
+   }
+   else{
+    alert(res.data.body.message)
+   }
+
+    setDescription('');
+    setTopicname('');
+  }
 
   return (
         <>
@@ -18,7 +46,8 @@ export default function addTopic() {
             value={description}
             onChange={(e)=>{setDescription(e.target.value)}}/>
 
-            <button type="button" className='p-2 bg-sky-300 rounded-xl mx-auto w-[80%] mt-5 font-semibold mb-4'> Add Topic</button>
+            <button type="button" className='p-2 bg-sky-300 rounded-xl mx-auto w-[80%] mt-5 font-semibold mb-4'
+            onClick={()=>{addTopic()}}> Add Topic</button>
           
           </form>
         </div>
